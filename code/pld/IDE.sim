@@ -1,0 +1,68 @@
+%SIGNAL
+PIN   3 =  A6 
+PIN   4 =  A7 
+PIN   5 =  A8 
+PIN   6 =  A9 
+PIN   7 =  A10 
+PIN   8 =  A11 
+PIN   9 =  A12 
+PIN  10 =  A13 
+PIN  11 =  A14 
+PIN  13 =  A15 
+PIN  14 =  A16 
+PIN  15 =  A17 
+PIN  16 =  A18 
+PIN  17 =  A19 
+PIN   1 =  CPUCLK 
+PIN  22 =  IDE_CS 
+PIN  23 =  IDE_CS3 
+PIN  20 =  IDE_RW 
+PIN  21 =  IDE_WR 
+PIN   2 = !IOSEL 
+PIN  18 = !RW 
+%END
+
+%FIELD
+%END
+
+%EQUATION
+IDE_CS =>
+    A6 & !A7 & !A8 & !A9 & !A10 & !A11 & !A12 & !A13 & !A14 & !A15 & !A16 & !A17 & !A18 & A19 & !IOSEL
+
+IDE_CS3 =>
+    1 
+
+IDE_RW =>
+    !RW
+
+IDE_WR =>
+    RW
+
+A16.oe  =>
+    0 
+
+A17.oe  =>
+    0 
+
+A18.oe  =>
+    0 
+
+A19.oe  =>
+    0 
+
+IDE_CS.oe  =>
+    1 
+
+IDE_CS3.oe  =>
+    1 
+
+IDE_RW.oe  =>
+    1 
+
+IDE_WR.oe  =>
+    1 
+
+RW.oe  =>
+    0 
+
+%END
