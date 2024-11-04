@@ -1,0 +1,4 @@
+(fp_lib_table
+  (version 7)
+  (lib (name "SIMM72")(type "KiCad")(uri "${KIPRJMOD}/SIMM72.pretty")(options "")(descr ""))
+)

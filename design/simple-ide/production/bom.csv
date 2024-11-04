@@ -1,0 +1,4 @@
+Designator,Footprint,Quantity,Value,LCSC Part #
+"C1, C2, C3, C4, C5",0805,5,100nF,C49678
+D1,0805,1,Disk Activity LED,C2297
+R1,0805,1,1K,C17513
