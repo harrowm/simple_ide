@@ -14,26 +14,55 @@ Device    g22V10;
 /*                                                              */
 /****************************************************************/
 
+/* pinout like GALasm as I find it easy to read                    */
+/* Pins 1-12                                                       */
+/* CPUCLK IOSEL A6  A7  A8  A9  A10 A11    A12    A13    A14   GND */
+/* A15    A16   A17 A18 A19 RW  AS  IDE_RW IDE_WR IDE_CS DTACK VCC */
+/* Pins 13 -24                                                     */
+
 /**  Inputs  **/
 
-PIN 1           = CPUCLK;
-PIN 2           = !IOSEL;        
-PIN [3..11]     = [A6..A14];    /* PIN 12 is GND                */
-PIN [13..17]    = [A15..A19];    
-PIN 18          = !RW;
-
- 
+PIN 1              = CPUCLK;
+PIN 2              = IOSEL;        
+PIN [3..11,13..17] = [A6..19];  /* PIN 12 is GND                */
+PIN 18             = RW;
+PIN 19             = AS;
 
 /**  Outputs  **/
 
-PIN 20          = IDE_RW;       /* Split of RW from 68k         */
-PIN 21          = IDE_WR;      
-PIN 22          = IDE_CS;       /* Enable IDE                   */
-PIN 23          = IDE_CS3;      /* Not used                     */
+PIN 20             = IDE_RW;       /* IDE_PIN 25                */
+PIN 21             = IDE_WR;       /* IDE_PIN 23                */
+PIN 22             = IDE_CS;       /* Enable IDE. IDE_PIN 37    */
+PIN 23             = DTACK;
 
 /** Logic Equations **/
 
-IDE_CS = IOSEL & A19 & !A18 & !A17 & !A16 & !A15 & !A14 & !A13 & !A12 & !A11 & !A10 & !A9 & !A8 & !A7 & A6;
-IDE_CS3 = 'b'1;
-IDE_WR = !RW ; /* & IDE_CS; */
-IDE_RW = RW  ; /* & IDE_CS; */
+FIELD addr = [A19..6];
+
+/* 
+   I is from IOSEL, and comes from [A23..20]
+   S...S is specified below
+   C selects CS3 vs CS1 in the IDE
+   RRR selects the IDE register
+   x is the LSB and may not be relevant e.g. for 16-bit access
+
+   IIII_SSSS_SSSS_SSSS_SSSC_RRRx
+   1111_1000_0000_0010_010C_RRRx
+ 0x   F    8    0    0  4/5  F-0
+*/
+
+!IDE_CS = !IOSEL & !AS & addr:'b'XXXX100000000000010XXXXX;
+
+/* !IDE_CS = !IOSEL & !AS & A19 & A18 & A17 & A16 & A15 & A14 & A13 & A12; */
+/*!IDE_CS = !IOSEL & !AS & A19 & A18 & A17 & A16 & A15 & A14 & A13 & A12 & A11 & A10 & A9 & A8 & A7 & !A6;*/
+
+/* !IDE_CS = !IOSEL & !AS & A19 & !A18 & !A17 & !A16 & !A15 & !A14 & !A13 & !A12 & !A11 & !A10 & !A9 & !A8 & !A7 & A6; */
+
+DTACK = 'b'0;  
+DTACK.oe = !IDE_CS; /* only signal DTACK if the IDE is selected */  
+
+IDE_WR = !RW;
+IDE_RW = RW;
+
+/* IDE_WR = !RW & IDE_CS;  */
+/* IDE_RW = RW  & IDE_CS;  */
