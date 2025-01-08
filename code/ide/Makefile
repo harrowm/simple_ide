@@ -1,19 +1,25 @@
-# Make rosco_m68k example program for C
-#
-# Copyright (c) 2020-2022 Xark and contributors
-# MIT LICENSE
+CC=m68k-elf-rosco-gcc
+OBJCOPY=m68k-elf-rosco-objcopy
+OBJDUMP=m68k-elf-rosco-objdump
+CFLAGS?=-g -O3
+LDFLAGS?=-g -mgdb
 
-ROSCO_M68K_DEFAULT_DIR=../../../rosco_m68k/
+SOURCES=main.c ide.c
+OBJECTS=$(SOURCES:.c=.o)
+PROGRAM=idetest
 
-ifndef ROSCO_M68K_DIR
-$(info NOTE: ROSCO_M68K_DIR not set, using libs: ../../../code/software/libs)
-ROSCO_M68K_DIR=$(ROSCO_M68K_DEFAULT_DIR)
-else
-$(info NOTE: Using ROSCO_M68K_DIR libs in: $(ROSCO_M68K_DIR))
-endif
+all: $(PROGRAM).bin $(PROGRAM).dis
 
--include $(ROSCO_M68K_DIR)/code/software/software.mk
+$(PROGRAM).elf: $(OBJECTS)
+	$(CC) $(LDFLAGS) -Wl,-Map=$(PROGRAM).map -Wl,--warn-common -o $@ $^
 
-EXTRA_CFLAGS=
-EXTRA_LIBS+=-lsdfat -ldebug_stub -lheap
-# EXTRA_VASMFLAGS?=-showopt
+$(PROGRAM).dis: $(PROGRAM).elf
+	$(OBJDUMP) -d $< > $@
+
+$(PROGRAM).bin: $(PROGRAM).elf
+	$(OBJCOPY) -O binary $< $@
+
+clean:
+	$(RM) $(OBJECTS) $(PROGRAM).bin $(PROGRAM).map $(PROGRAM).elf $(PROGRAM).dis
+
+.PHONY: all clean
