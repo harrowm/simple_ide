@@ -1,0 +1,9 @@
+EESchema-DOCLIB  Version 2.0
+#
+$CMP ATF22V10C-15PU
+D Microchip ATF22V10C-15PU, SPLD Simple Programmable Logic Device
+K
+F http://ww1.microchip.com/downloads/en/DeviceDoc/doc0735.pdf
+$ENDCMP
+#
+#End Doc Library
