@@ -1,3 +1,6 @@
+# KiCad backups
+design/simple_ide-backups/*
+
 # Prerequisites
 .DS_Store
 *.d

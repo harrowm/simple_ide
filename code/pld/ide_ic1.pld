@@ -1,0 +1,55 @@
+Name      ide_ic1;
+Partno    ;
+Date      14/01/25;
+Revision  01;
+Designer  Malcolm Harrow;
+Company   Malcolm Harrow, MIT License;
+Assembly  None;
+Location  None;
+Device    g22V10;
+
+/****************************************************************/
+/*                                                              */
+/* PLD code for the simple ide interface, sets CS and R/W lines */
+/*                                                              */
+/****************************************************************/
+
+/* pinout like GALasm as I find it easy to read                 */
+/* Pins 1-12                                                    */
+/* IOSEL FC2 FC1 FC0 X   A15 A16 A17 A18 A19 AS    GND */
+/* A14   A13 A12 A11 A10 A9  A8  A7  A6  A5  IDECS VCC */
+/* Pins 13 -24                                                  */
+
+/**  Inputs  **/
+
+PIN 1              = IOSEL;
+PIN 2              = FC2;        
+PIN 3              = FC1;        
+PIN 4              = FC0;        
+PIN [6..10]        = [A15..19];  
+PIN 11             = AS;
+PIN [13..22]       = [A14..5];
+
+/**  Outputs  **/
+PIN 23             = IDECS;
+
+/** Logic Equations **/
+
+FIELD addr = [A19..6];
+
+/* 
+   I is from IOSEL, and comes from [A23..20]
+   S...S is specified below
+   C selects CS3 vs CS1 in the IDE
+   RRR selects the IDE register
+   x is the LSB and may not be relevant e.g. for 16-bit access
+
+   IIII_SSSS_SSSS_SSSS_SSSC_RRRx
+   1111_1000_0000_0010_010C_RRRx
+ 0x   F    8    0    0  4/5  F-0
+*/
+
+/* IDE_CS is further processed in IC2 to determine whether CS0 or CS1 is set */
+
+!IDE_CS = !IOSEL & !AS & addr:'b'XXXX100000000000010XXXXX;
+
