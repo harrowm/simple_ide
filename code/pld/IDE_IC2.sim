@@ -1,0 +1,80 @@
+%SIGNAL
+PIN   7 =  A1 
+PIN   6 =  A2 
+PIN  21 =  A3 
+PIN   4 =  A4 
+PIN   2 =  AS 
+PIN  16 =  DTACK 
+PIN   9 =  FC0 
+PIN  10 =  FC1 
+PIN  11 =  FC2 
+PIN  17 =  IDEBUF 
+PIN   3 =  IDECS 
+PIN  22 =  IDECS0 
+PIN  23 =  IDECS1 
+PIN  18 =  IDERD 
+PIN   8 =  IDERDY 
+PIN  20 =  IDESEL 
+PIN  19 =  IDEWR 
+PIN   1 =  RW 
+PIN   5 =  UDS 
+PIN  14 =  VPA 
+%END
+
+%FIELD
+%END
+
+%EQUATION
+DTACK =>
+    !IDERDY
+
+DTACK.oe  =>
+    !IDESEL
+
+IDEBUF =>
+    !IDECS0
+  # !IDECS1
+
+IDECS0 =>
+    A4 & FC0 & FC1 & FC2 & !IDECS
+
+IDECS1 =>
+    !A4 & FC0 & FC1 & FC2 & !IDECS
+
+IDERW =>
+    !RW
+  # AS
+  # UDS
+
+IDESEL =>
+    !AS & !IDECS0
+  # !AS & !IDECS1
+
+IDEWR =>
+    !AS & !RW & !UDS
+
+VPA =>
+    A1 & A2 & !A3 & FC0 & FC1 & FC2
+
+A3.oe  =>
+    0 
+
+IDEBUF.oe  =>
+    1 
+
+IDECS0.oe  =>
+    1 
+
+IDECS1.oe  =>
+    1 
+
+IDESEL.oe  =>
+    1 
+
+IDEWR.oe  =>
+    1 
+
+VPA.oe  =>
+    1 
+
+%END
