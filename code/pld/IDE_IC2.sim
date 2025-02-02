@@ -29,35 +29,29 @@ DTACK =>
     !IDERDY
 
 DTACK.oe  =>
-    !IDESEL
+    IDESEL
 
-IDEBUF =>
+!IDEBUF =>
     !IDECS0
   # !IDECS1
 
-IDECS0 =>
+!IDECS0 =>
     A4 & FC0 & FC1 & FC2 & !IDECS
 
-IDECS1 =>
+!IDECS1 =>
     !A4 & FC0 & FC1 & FC2 & !IDECS
 
-IDERW =>
+!IDERW =>
     !RW
   # AS
   # UDS
 
 IDESEL =>
-    !AS & !IDECS0
-  # !AS & !IDECS1
+    !IDECS0
+  # !IDECS1
 
-IDEWR =>
+!IDEWR =>
     !AS & !RW & !UDS
-
-VPA =>
-    A1 & A2 & !A3 & FC0 & FC1 & FC2
-
-A3.oe  =>
-    0 
 
 IDEBUF.oe  =>
     1 
@@ -72,9 +66,6 @@ IDESEL.oe  =>
     1 
 
 IDEWR.oe  =>
-    1 
-
-VPA.oe  =>
     1 
 
 %END

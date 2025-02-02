@@ -23,27 +23,15 @@ PIN   1 =  IOSEL
 %END
 
 %FIELD
-FIELD addr = A19,A18,A17,A16,A15,A14,A13,A12,A11,A10,A9,A8,A7,A6
+FIELD addr = A19,A18,A17,A16,A15,A14,A13,A12,A11,A10,A9,A8,A7,A6,A5
 %END
 
 %EQUATION
-!IDE_CS =>
-    IOSEL
-  # AS
-  # !A19
-  # A18
-  # A17
-  # A16
-  # A15
-  # A14
-  # A13
-  # A12
-  # A11
-  # A10
-  # A9
-  # A8
-  # A7
-  # !A6
+!IDECS =>
+    !A5 & A6 & !A7 & !A8 & !A9 & !A10 & !A11 & !A12 & !A13 & !A14 & !A15 & !A16 & !A17 & !A18 & A19 & !AS & !IOSEL
+
+A5.oe  =>
+    0 
 
 A6.oe  =>
     0 
@@ -68,5 +56,8 @@ A12.oe  =>
 
 A13.oe  =>
     0 
+
+IDECS.oe  =>
+    1 
 
 %END

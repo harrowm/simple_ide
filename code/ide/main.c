@@ -42,10 +42,14 @@ int main()
 {
     uint16_t buf[256] = {0};
 
-    printf("IDE Demo\n");
+    printf("IDE Demo %08X\n", IDE_COMMAND);
 
     printf("Reset IDE device\n");
-    MEM(IDE_COMMAND) = IDE_CMD_RESET;
+    for (;;) {
+        MEM(IDE_COMMAND) = IDE_CMD_RESET;
+        printf("*");
+    }
+    printf("Reset2 IDE device\n");
     IDE_wait_for_device_ready();
 
     printf("Get drive info\n");

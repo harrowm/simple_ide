@@ -20,36 +20,31 @@ Device    g22V10;
 /* A14   A13 A12 A11 A10 A9  A8  A7  A6  A5  IDECS VCC */
 /* Pins 13 -24                                                  */
 
-/**  Inputs  **/
+/* TODO: I dont think we need A5 */
+/* FC0-2 have to be in the other IC if we want to generate VPA there */
+/* So one option is to bring in A4 then generate IDECS0/2 here */
+/* move FC0-2 to the other IC */
+/* Rotate the two GALs so they have the same roatation as the buffers */
+/* Have managed to plug them in the wrong way around .. */
+/* Spacing from IDE plug to edge of the board for right angle */
+/* Note IC1 and IC2 on silkscreen where they can be seen with chip holders in place */
 
+/**  Inputs  **/
 PIN 1              = IOSEL;
 PIN 2              = FC2;        
 PIN 3              = FC1;        
 PIN 4              = FC0;        
-PIN [6..10]        = [A15..19];  
+PIN [10..6,13..22] = [A19..5];  
 PIN 11             = AS;
-PIN [13..22]       = [A14..5];
 
 /**  Outputs  **/
 PIN 23             = IDECS;
 
 /** Logic Equations **/
+/* IOSEL low gives us an address in the range F00000 to FFFFFF  */
+/* IDE card mapped to F80040 upwards                            */
+/* IDECS is further processed in IC2 to determine whether       */
+/* CS0 or CS1 is set                                            */
 
-FIELD addr = [A19..6];
-
-/* 
-   I is from IOSEL, and comes from [A23..20]
-   S...S is specified below
-   C selects CS3 vs CS1 in the IDE
-   RRR selects the IDE register
-   x is the LSB and may not be relevant e.g. for 16-bit access
-
-   IIII_SSSS_SSSS_SSSS_SSSC_RRRx
-   1111_1000_0000_0010_010C_RRRx
- 0x   F    8    0    0  4/5  F-0
-*/
-
-/* IDE_CS is further processed in IC2 to determine whether CS0 or CS1 is set */
-
-!IDE_CS = !IOSEL & !AS & addr:'b'XXXX100000000000010XXXXX;
-
+FIELD addr = [A19..5];
+!IDECS = !IOSEL & !AS & addr:['h'80040..8005F];
