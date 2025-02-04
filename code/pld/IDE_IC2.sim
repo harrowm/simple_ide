@@ -26,7 +26,7 @@ PIN  14 =  VPA
 
 %EQUATION
 DTACK =>
-    !IDERDY
+    0 
 
 DTACK.oe  =>
     IDESEL
@@ -36,15 +36,17 @@ DTACK.oe  =>
   # !IDECS1
 
 !IDECS0 =>
-    A4 & FC0 & FC1 & FC2 & !IDECS
+    A4 & !FC0 & !IDECS
+  # A4 & !FC2 & !IDECS
+  # A4 & !FC1 & !IDECS
 
 !IDECS1 =>
-    !A4 & FC0 & FC1 & FC2 & !IDECS
+    !A4 & !FC0 & !IDECS
+  # !A4 & !FC2 & !IDECS
+  # !A4 & !FC1 & !IDECS
 
-!IDERW =>
-    !RW
-  # AS
-  # UDS
+!IDERD =>
+    !AS & RW & !UDS
 
 IDESEL =>
     !IDECS0
@@ -60,6 +62,9 @@ IDECS0.oe  =>
     1 
 
 IDECS1.oe  =>
+    1 
+
+IDERD.oe  =>
     1 
 
 IDESEL.oe  =>

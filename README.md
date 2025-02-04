@@ -5,7 +5,18 @@ With a lot of thanks to the following projects:
 https://github.com/crmaykish/mackerel-68k/tree/master
 https://github.com/markrvmurray/rosco-ide-ata
 
-
+v1 hardware is in the v1 directory .. rough list of things to do in v2:  
+/* TODO: I dont think we need A5 */
+/* FC0-2 have to be in the other IC if we want to generate VPA there */
+/* So one option is to bring in A4 then generate IDECS0/2 here */
+/* move FC0-2 to the other IC */
+/* Rotate the two GALs so they have the same roatation as the buffers */
+/* Have managed to plug them in the wrong way around .. */
+/* Spacing from IDE plug to edge of the board for right angle */
+/* Note IC1 and IC2 on silkscreen where they can be seen with chip holders in place */
+/* bring in DS */
+/* fix connections for ~reset and ~idebuf that dont go anywhere !!! */
+/* flag connections from rosco bus as not used when .. not used .. */
 To build the rosco firmware with ATA enabled:
 
 cd

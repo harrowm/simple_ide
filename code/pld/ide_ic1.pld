@@ -28,6 +28,9 @@ Device    g22V10;
 /* Have managed to plug them in the wrong way around .. */
 /* Spacing from IDE plug to edge of the board for right angle */
 /* Note IC1 and IC2 on silkscreen where they can be seen with chip holders in place */
+/* bring in DS */
+/* fix connections for ~reset and ~idebuf that dont go anywhere !!! */
+/* flag connections from rosco bus as not used when .. not used .. */
 
 /**  Inputs  **/
 PIN 1              = IOSEL;

@@ -28,9 +28,7 @@ PIN 3              = IDECS;
 PIN [4,21,6,7]     = [A4..1];
 PIN 5              = UDS;
 PIN 8              = IDERDY;
-PIN 9              = FC0;
-PIN 10             = FC1;
-PIN 11             = FC2;
+PIN [11,10,9]      = [FC2..0];
 
 /**  Outputs  **/
 PIN 14             = VPA;
@@ -45,18 +43,19 @@ PIN 23             = IDECS1;
 /** Logic Equations **/
 
 /* We do need FC here because not included in logic in IC1 */
-!IDECS0 = !IDECS & (FC0 & FC1 & FC2) & A4;	
-!IDECS1 = !IDECS & (FC0 & FC1 & FC2) & !A4;	
+!IDECS0 = !IDECS & !(FC0 & FC1 & FC2) & A4;	
+!IDECS1 = !IDECS & !(FC0 & FC1 & FC2) & !A4;	
 
-DTACK = !IDERDY;
-IDESEL = !IDECS0 # !IDECS1;  
+DTACK = 'b'0;
+IDESEL = !IDECS0 # !IDECS1;
 DTACK.oe = IDESEL; 
 
-!IDEBUF = !IDECS0 # !IDECS1; /* active low, not the same as IDESEL */
+!IDEBUF = !IDECS0 # !IDECS1;
 
 /* we may not need AS in these .. if not we can remove AS from chip .. */
+/* or do we .. Mackerel used AS and DS .. and we dont have DS here :( */
 !IDEWR = !RW & !AS & !UDS;
-!IDERW = RW & !AS & !UDS;
+!IDERD = RW & !AS & !UDS;
 
 /* Not sure if we need this either .. if not we dont need A3 to A1 in the chip ..*/
 /* VPA = (FC0 & FC1 & FC2) & (!A3 & A2 & A1);    */
