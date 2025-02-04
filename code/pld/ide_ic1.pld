@@ -20,23 +20,9 @@ Device    g22V10;
 /* A14   A13 A12 A11 A10 A9  A8  A7  A6  A5  IDECS VCC */
 /* Pins 13 -24                                                  */
 
-/* TODO: I dont think we need A5 */
-/* FC0-2 have to be in the other IC if we want to generate VPA there */
-/* So one option is to bring in A4 then generate IDECS0/2 here */
-/* move FC0-2 to the other IC */
-/* Rotate the two GALs so they have the same roatation as the buffers */
-/* Have managed to plug them in the wrong way around .. */
-/* Spacing from IDE plug to edge of the board for right angle */
-/* Note IC1 and IC2 on silkscreen where they can be seen with chip holders in place */
-/* bring in DS */
-/* fix connections for ~reset and ~idebuf that dont go anywhere !!! */
-/* flag connections from rosco bus as not used when .. not used .. */
-
 /**  Inputs  **/
 PIN 1              = IOSEL;
-PIN 2              = FC2;        
-PIN 3              = FC1;        
-PIN 4              = FC0;        
+PIN [2..4]         = FC[2..0];              
 PIN [10..6,13..22] = [A19..5];  
 PIN 11             = AS;
 
@@ -47,7 +33,7 @@ PIN 23             = IDECS;
 /* IOSEL low gives us an address in the range F00000 to FFFFFF  */
 /* IDE card mapped to F80040 upwards                            */
 /* IDECS is further processed in IC2 to determine whether       */
-/* CS0 or CS1 is set                                            */
+/* CS0 or CS1 is set - not enough free pins here !              */
 
 FIELD addr = [A19..5];
-!IDECS = !IOSEL & !AS & addr:['h'80040..8005F];
+!IDECS = !IOSEL & !AS & !(FC2 & FC1 & FC0) & addr:['h'80040..8005F];

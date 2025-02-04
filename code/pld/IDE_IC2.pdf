@@ -5,7 +5,7 @@
   {Program "CUPL(WM) Version 5.0a"}
   {DBtype "Schematic"}
   {DBvrev 1.01}
-  {DBtime "Mon Feb 03 13:53:47 2025 "}
+  {DBtime "Tue Feb 04 13:36:48 2025 "}
   {DBunit "MIL"}
   {DBgrid 10}
   {Lyrstr "WIRES" 1 "BUS" 1 "GATE" 2 "IEEE" 2 "PINFUN" 3 "PINNUM" 1 
@@ -33,39 +33,35 @@
  {SYMBOL
   {PIN_DEF
    [Ly "PINCON"]
-   {P RW {Pt "INPUT"}{Lq 0}{Ploc 100 280}}
-   {P AS {Pt "INPUT"}{Lq 0}{Ploc 100 240}}
-   {P IDECS {Pt "INPUT"}{Lq 0}{Ploc 100 220}}
-   {P A4 {Pt "INPUT"}{Lq 0}{Ploc 100 200}}
-   {P UDS {Pt "INPUT"}{Lq 0}{Ploc 100 180}}
-   {P A2 {Pt "INPUT"}{Lq 0}{Ploc 100 160}}
-   {P A1 {Pt "INPUT"}{Lq 0}{Ploc 100 140}}
-   {P IDERDY {Pt "INPUT"}{Lq 0}{Ploc 100 120}}
-   {P FC0 {Pt "INPUT"}{Lq 0}{Ploc 100 100}}
-   {P FC1 {Pt "INPUT"}{Lq 0}{Ploc 100 80}}
-   {P FC2 {Pt "INPUT"}{Lq 0}{Ploc 100 60}}
-   {P VPA {Pt "INPUT"}{Lq 0}{Ploc 100 40}}
+   {P RW {Pt "INPUT"}{Lq 0}{Ploc 100 240}}
+   {P AS {Pt "INPUT"}{Lq 0}{Ploc 100 200}}
+   {P IDECS {Pt "INPUT"}{Lq 0}{Ploc 100 180}}
+   {P A4 {Pt "INPUT"}{Lq 0}{Ploc 100 160}}
+   {P UDS {Pt "INPUT"}{Lq 0}{Ploc 100 140}}
+   {P A2 {Pt "INPUT"}{Lq 0}{Ploc 100 120}}
+   {P A1 {Pt "INPUT"}{Lq 0}{Ploc 100 100}}
+   {P FC0 {Pt "INPUT"}{Lq 0}{Ploc 100 80}}
+   {P FC1 {Pt "INPUT"}{Lq 0}{Ploc 100 60}}
+   {P FC2 {Pt "INPUT"}{Lq 0}{Ploc 100 40}}
    {P A3 {Pt "INPUT"}{Lq 0}{Ploc 100 20}}
-   {P DTACK {Pt "I/O"}{Lq 0}{Ploc 320 20}}
-   {P IDEBUF {Pt "I/O"}{Lq 0}{Ploc 320 40}}
-   {P IDERD {Pt "I/O"}{Lq 0}{Ploc 320 60}}
-   {P IDEWR {Pt "I/O"}{Lq 0}{Ploc 320 80}}
-   {P IDESEL {Pt "I/O"}{Lq 0}{Ploc 320 100}}
-   {P IDECS0 {Pt "I/O"}{Lq 0}{Ploc 320 120}}
-   {P IDECS1 {Pt "I/O"}{Lq 0}{Ploc 320 140}}
+   {P DTACK {Pt "I/O"}{Lq 0}{Ploc 310 20}}
+   {P IDEBUF {Pt "I/O"}{Lq 0}{Ploc 310 40}}
+   {P IDERD {Pt "I/O"}{Lq 0}{Ploc 310 60}}
+   {P IDEWR {Pt "I/O"}{Lq 0}{Ploc 310 80}}
+   {P IDESEL {Pt "I/O"}{Lq 0}{Ploc 310 100}}
+   {P IDECS0 {Pt "I/O"}{Lq 0}{Ploc 310 120}}
+   {P IDECS1 {Pt "I/O"}{Lq 0}{Ploc 310 140}}
   }
 
   {PKG
    [Ly "REFDES"]
    [Ts 25][Tj "CB"][Tr 0][Tm "N"]
-   {Rdl 210 310}
+   {Rdl 205 270}
 
    [Ly "PINNUM"]
    [Ts 15][Tj "RC"]
-   {Pnl 120 290}
-   [Ts 15][Tj "RC"]
    {Pnl 120 250}
-   {Pnl 120 230}
+   [Ts 15][Tj "RC"]
    {Pnl 120 210}
    {Pnl 120 190}
    {Pnl 120 170}
@@ -77,25 +73,23 @@
    {Pnl 120 50}
    {Pnl 120 30}
    [Ts 15][Tj "LC"]
-   {Pnl 300 30}
-   {Pnl 300 50}
-   {Pnl 300 70}
-   {Pnl 300 90}
-   {Pnl 300 110}
-   {Pnl 300 130}
-   {Pnl 300 150}
+   {Pnl 290 30}
+   {Pnl 290 50}
+   {Pnl 290 70}
+   {Pnl 290 90}
+   {Pnl 290 110}
+   {Pnl 290 130}
+   {Pnl 290 150}
 
-   {Sd A 1 2 3 4 5 6 7 8 9 10 11 14 21 16 17 18 19 20 22 23}
+   {Sd A 1 2 3 4 5 6 7 9 10 11 21 16 17 18 19 20 22 23}
   }
 
   {PIC
    [Ly "GATE"]
    [Ts 15][Tj "LC"][Tr 0][Tm "N"]
-   {R 130 300 290 0}
-   {L 130 280 100 280}
-   {L 130 290 140 280 130 270}
+   {R 130 260 280 0}
    {L 130 240 100 240}
-   {L 130 220 100 220}
+   {L 130 250 140 240 130 230}
    {L 130 200 100 200}
    {L 130 180 100 180}
    {L 130 160 100 160}
@@ -106,39 +100,37 @@
    {L 130 60 100 60}
    {L 130 40 100 40}
    {L 130 20 100 20}
-   {L 290 20 320 20}
-   {L 290 40 320 40}
-   {L 290 60 320 60}
-   {L 290 80 320 80}
-   {L 290 100 320 100}
-   {L 290 120 320 120}
-   {L 290 140 320 140}
+   {L 280 20 310 20}
+   {L 280 40 310 40}
+   {L 280 60 310 60}
+   {L 280 80 310 80}
+   {L 280 100 310 100}
+   {L 280 120 310 120}
+   {L 280 140 310 140}
    [Ly "PINNAM"]
    [Tj "LC"]
-   {T "RW" 140 280}
-   {T "AS" 140 240}
-   {T "IDECS" 140 220}
-   {T "A4" 140 200}
-   {T "UDS" 140 180}
-   {T "A2" 140 160}
-   {T "A1" 140 140}
-   {T "IDERDY" 140 120}
-   {T "FC0" 140 100}
-   {T "FC1" 140 80}
-   {T "FC2" 140 60}
-   {T "VPA" 140 40}
+   {T "RW" 140 240}
+   {T "AS" 140 200}
+   {T "IDECS" 140 180}
+   {T "A4" 140 160}
+   {T "UDS" 140 140}
+   {T "A2" 140 120}
+   {T "A1" 140 100}
+   {T "FC0" 140 80}
+   {T "FC1" 140 60}
+   {T "FC2" 140 40}
    {T "A3" 140 20}
    [Tj "RC"]
-   {T "DTACK" 280 20}
-   {T "IDEBUF" 280 40}
-   {T "IDERD" 280 60}
-   {T "IDEWR" 280 80}
-   {T "IDESEL" 280 100}
-   {T "IDECS0" 280 120}
-   {T "IDECS1" 280 140}
+   {T "DTACK" 270 20}
+   {T "IDEBUF" 270 40}
+   {T "IDERD" 270 60}
+   {T "IDEWR" 270 80}
+   {T "IDESEL" 270 100}
+   {T "IDECS0" 270 120}
+   {T "IDECS1" 270 140}
    [Ly "DEVICE"]
    [Tj "CT"]
-   {T "G22V10" 210 -10}
+   {T "G22V10" 205 -10}
   }
 
   {ATR
@@ -149,7 +141,7 @@
    {EX
     [Ly "ATTR2"]
     [Ts 12][Tj "CT"][Tr 0][Tm "N"]
-    {At PLD Z:\USERS\MALCOLM\SIMPLE_IDE\CODE\PLD\IDE_IC2 210 300}
+    {At PLD Z:\USERS\MALCOLM\SIMPLE_IDE\CODE\PLD\IDE_IC2 205 260}
    }
   }
  }
@@ -173,15 +165,11 @@
    }
    {N A1
    }
-   {N IDERDY
-   }
    {N FC0
    }
    {N FC1
    }
    {N FC2
-   }
-   {N VPA
    }
    {N A3
    }

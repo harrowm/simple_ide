@@ -16,46 +16,39 @@ Device    g22V10;
 
 /* pinout like GALasm as I find it easy to read                 */
 /* Pins 1-12                                                    */
-/* RW AS  IDECS A4    UDS    A2    A1    IDERDY FC0 FC1    FC2    GND */
-/* X  VPA X     DTACK IDEBUF IDERD IDEWR IDESEL A3  IDECS0 IDECS1 VCC */
+/* RW AS IDECS A4    UDS    A2    A1    X      X  X      X      GND */
+/* X  X  X     DTACK IDEBUF IDERD IDEWR IDESEL A3 IDECS0 IDECS1 VCC */
 /* Pins 13-24                                                   */
 
 /**  Inputs  **/
-
 PIN 1              = RW;
 PIN 2              = AS;           
 PIN 3              = IDECS;
 PIN [4,21,6,7]     = [A4..1];
 PIN 5              = UDS;
-PIN 8              = IDERDY;
 PIN [11,10,9]      = [FC2..0];
 
+/* NOTE A2 and A1 shift on v2 board .. */
+
 /**  Outputs  **/
-PIN 14             = VPA;
 PIN 16             = DTACK;
 PIN 17             = IDEBUF;
 PIN 18             = IDERD;
 PIN 19             = IDEWR;
-PIN 20             = IDESEL; 
+PIN 20             = IDESEL;  /* needed for tri-state */ 
 PIN 22             = IDECS0;
 PIN 23             = IDECS1; 
 
 /** Logic Equations **/
 
-/* We do need FC here because not included in logic in IC1 */
-!IDECS0 = !IDECS & !(FC0 & FC1 & FC2) & A4;	
-!IDECS1 = !IDECS & !(FC0 & FC1 & FC2) & !A4;	
+!IDECS0 = !IDECS & !A4;	
+!IDECS1 = !IDECS & A4;	
 
-DTACK = 'b'0;
+DTACK = 'b'0;  /* No need to use IDERDY as always 0 */
 IDESEL = !IDECS0 # !IDECS1;
 DTACK.oe = IDESEL; 
 
 !IDEBUF = !IDECS0 # !IDECS1;
 
-/* we may not need AS in these .. if not we can remove AS from chip .. */
-/* or do we .. Mackerel used AS and DS .. and we dont have DS here :( */
 !IDEWR = !RW & !AS & !UDS;
 !IDERD = RW & !AS & !UDS;
-
-/* Not sure if we need this either .. if not we dont need A3 to A1 in the chip ..*/
-/* VPA = (FC0 & FC1 & FC2) & (!A3 & A2 & A1);    */

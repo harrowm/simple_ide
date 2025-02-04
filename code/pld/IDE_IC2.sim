@@ -13,12 +13,10 @@ PIN   3 =  IDECS
 PIN  22 =  IDECS0 
 PIN  23 =  IDECS1 
 PIN  18 =  IDERD 
-PIN   8 =  IDERDY 
 PIN  20 =  IDESEL 
 PIN  19 =  IDEWR 
 PIN   1 =  RW 
 PIN   5 =  UDS 
-PIN  14 =  VPA 
 %END
 
 %FIELD
@@ -36,14 +34,10 @@ DTACK.oe  =>
   # !IDECS1
 
 !IDECS0 =>
-    A4 & !FC0 & !IDECS
-  # A4 & !FC2 & !IDECS
-  # A4 & !FC1 & !IDECS
+    !A4 & !IDECS
 
 !IDECS1 =>
-    !A4 & !FC0 & !IDECS
-  # !A4 & !FC2 & !IDECS
-  # !A4 & !FC1 & !IDECS
+    A4 & !IDECS
 
 !IDERD =>
     !AS & RW & !UDS
