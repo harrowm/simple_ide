@@ -14,17 +14,30 @@ Device    g22V10;
 /*                                                              */
 /****************************************************************/
 
-/* pinout like GALasm as I find it easy to read                 */
-/* Pins 1-12                                                    */
-/* IOSEL FC2 FC1 FC0 X   A15 A16 A17 A18 A19 AS    GND */
-/* A14   A13 A12 A11 A10 A9  A8  A7  A6  A5  IDECS VCC */
-/* Pins 13 -24                                                  */
+/* Pin Map
+       --------
+IOSEL |1     24| VCC
+FC2   |2     23| IDECS
+FC1   |3     22| A5
+FC0   |4     21| A6
+X     |5     20| A7
+A15   |6     19| A8
+A16   |7     18| A9
+A17   |8     17| A10
+A18   |9     16| A11
+A19   |10    15| A12
+AS    |11    14| A13
+GND   |12    13| A14
+       --------
+*/
 
 /**  Inputs  **/
 PIN 1              = IOSEL;
-PIN [2..4]         = FC[2..0];              
+PIN [2..4]         = [FC2..0];              
 PIN [10..6,13..22] = [A19..5];  
-PIN 11             = AS;
+
+/* Remove AS */
+/* PIN 11             = AS; */
 
 /**  Outputs  **/
 PIN 23             = IDECS;
@@ -36,4 +49,7 @@ PIN 23             = IDECS;
 /* CS0 or CS1 is set - not enough free pins here !              */
 
 FIELD addr = [A19..5];
-!IDECS = !IOSEL & !AS & !(FC2 & FC1 & FC0) & addr:['h'80040..8005F];
+
+/* remove AS */
+/* !IDECS = !IOSEL & !AS & !(FC2 & FC1 & FC0) & addr:['h'80040..8005F]; */
+!IDECS = !IOSEL & !(FC2 & FC1 & FC0) & addr:['h'80040..8005F];
