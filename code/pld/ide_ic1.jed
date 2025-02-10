@@ -1,7 +1,7 @@
 
 CUPL(WM)        5.0a  Serial# MW-10400000
 Device          g22v10  Library DLIB-h-40-1
-Created         Mon Feb 10 09:31:58 2025
+Created         Mon Feb 10 09:51:30 2025
 Name            ide_ic1
 Partno          
 Revision        01
@@ -23,4 +23,4 @@ Location        None
 *L05792 00000000000000000101010101010101
 *L05824 01010000000000000000000000000000
 *C0E63
-*982A
+*9822

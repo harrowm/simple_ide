@@ -1,11 +1,11 @@
-all: ide_ic1.jed ide_ic2v3.jed
+all: ide_ic1.jed ide_ic2.jed
 
 
-*.jed: *.pld
+%.jed:	%.pld
 	./5vcomp $<
 
 clean:
-	rm -f *.abs *.sim 
+	rm -f *.abs *.sim *.pdf
 
 .PHONY: clean all
 
