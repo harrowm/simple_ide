@@ -1,0 +1,119 @@
+Name      ide_ic2;
+Partno    ;
+Date      31/01/25;
+Revision  02;
+Designer  Malcolm Harrow;
+Company   Malcolm Harrow, MIT License;
+Assembly  None;
+Location  None;
+Device    g22V10;
+
+/****************************************************************/
+/*                                                              */
+/* PLD code for the simple ide interface, sets CS and R/W lines */
+/*                                                              */
+/****************************************************************/
+/* Original Pin Map
+       --------
+RW    |1     24| VCC
+AS    |2     23| IDECS1
+IDECS |3     22| IDECS0
+A4    |4     21| A3
+UDS   |5     20| IDESEL
+A2    |6     19| IDEWR
+A1    |7     18| IDERD
+X     |8     17| IDEBUF
+X     |9     16| DTACK
+X     |10    15| X
+X     |11    14| X
+GND   |12    13| X
+       --------
+*/
+
+/* New Pin Map
+       --------
+CLK   |1     24| VCC
+AS    |2     23| IDECS1
+IDECS |3     22| IDECS0
+A4    |4     21| READY
+UDS   |5     20| IDESEL
+A2    |6     19| IDEWR
+A1    |7     18| IDERD
+X     |8     17| IDEBUF
+RW    |9     16| DTACK
+RESET |10    15| WAIT2
+A3    |11    14| WAIT1
+GND   |12    13| X
+       --------
+*/
+
+/* Wiring instructions: */
+/* Cut RW to Pin 1 and connect pin 1 to CLK */
+/* Cut FC0 to pin 9 and connect RW to PIN 9 */
+/* Cut FC1 to pin 10 and connect RESET to pin 10 */
+/* Cut FC2 to pin 11 and connect A3 to pin 11 */
+/* Cut VPA to pin 14 */
+/* Cut A3 from pin 21 (two cuts) */
+
+/**  Inputs  **/
+/* PIN 1              = RW; */
+PIN 1              = CLK;
+
+PIN 9             = RW;
+PIN 10             = RESET;
+
+PIN 2              = AS;           
+PIN 3              = IDECS;
+
+/*PIN [4,21,6,7]     = [A4..1];*/
+PIN [4,11,6,7]     = [A4..1];
+
+
+PIN 5              = UDS;
+
+/*PIN [11,10,9]      = [FC2..0];*/
+
+
+/* NOTE A2 and A1 shift on v2 board .. */
+
+/**  Outputs  **/
+/* 14-23 */
+PIN 14 = WAIT1;
+PIN 15 = WAIT2;
+PIN 21 = READY;
+
+PIN 16             = DTACK;
+PIN 17             = IDEBUF;
+PIN 18             = IDERD;
+PIN 19             = IDEWR;
+PIN 20             = IDESEL;  /* needed for tri-state */ 
+PIN 22             = IDECS0;
+PIN 23             = IDECS1; 
+
+/** Logic Equations **/
+/* WAIT1.sp = 'b'0; */
+/* WAIT2.sp = 'b'0; */
+/* WAIT1.ar = 'b'0; */
+/* WAIT2.ar = 'b'0; */
+
+!IDECS0 = !IDECS & !A4;	
+!IDECS1 = !IDECS & A4;	
+
+DTACK = 'b'0;  /* No need to use IDERDY as always 0 */
+IDESEL = !IDECS0 # !IDECS1;
+DTACK.oe = IDESEL; 
+
+!IDEBUF = !IDECS0 # !IDECS1;
+
+/* IDESEL doesnt need to be here - just for debugging to restrict signal */
+!IDEWR = !RW & !AS & !UDS & IDESEL;
+READY = RW & !AS & !UDS & IDESEL;
+
+WAIT1.D = READY & RESET; /* check if we need to play with reset here .. save a pin ! */
+IDERD.OE = READY;
+IDERD = !WAIT1;
+
+
+/*WAIT2.D = READY & WAIT1;
+IDERD.OE = READY;
+IDERD = !WAIT2;*/
