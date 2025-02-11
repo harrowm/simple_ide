@@ -35,9 +35,7 @@ GND   |12    13| A14
 PIN 1              = IOSEL;
 PIN [2..4]         = [FC2..0];              
 PIN [10..6,13..22] = [A19..5];  
-
-/* Remove AS */
-/* PIN 11             = AS; */
+PIN 11             = AS;
 
 /**  Outputs  **/
 PIN 23             = IDECS;
@@ -49,7 +47,5 @@ PIN 23             = IDECS;
 /* CS0 or CS1 is set - not enough free pins here !              */
 
 FIELD addr = [A19..5];
-
-/* remove AS */
-/* !IDECS = !IOSEL & !AS & !(FC2 & FC1 & FC0) & addr:['h'80040..8005F]; */
+/* Remove & !AS */
 !IDECS = !IOSEL & !(FC2 & FC1 & FC0) & addr:['h'80040..8005F];

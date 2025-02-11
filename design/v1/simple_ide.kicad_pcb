@@ -891,7 +891,7 @@
 			(pintype "passive")
 			(uuid "0919c120-ad95-4bb8-ba86-ecc1d6d32517")
 		)
-		(model "${KICAD8_3DMODEL_DIR}/Package_DIP.3dshapes/DIP-24_W7.62mm_Socket.wrl"
+		(model "${KICAD8_3DMODEL_DIR}/Package_DIP.3dshapes/DIP-24_W7.62mm.step"
 			(offset
 				(xyz 0 0 0)
 			)
@@ -3582,7 +3582,7 @@
 			(pintype "passive")
 			(uuid "46c2298f-675e-4eed-9f2f-29920d6b6744")
 		)
-		(model "${KICAD8_3DMODEL_DIR}/Package_DIP.3dshapes/DIP-24_W7.62mm_Socket.wrl"
+		(model "${KICAD8_3DMODEL_DIR}/Package_DIP.3dshapes/DIP-24_W7.62mm.step"
 			(offset
 				(xyz 0 0 0)
 			)
@@ -4356,7 +4356,7 @@
 			(pintype "passive+no_connect")
 			(uuid "51388789-c017-44a6-ba0c-9eae1a9302a6")
 		)
-		(model "${KICAD8_3DMODEL_DIR}/Connector_PinSocket_2.00mm.3dshapes/PinSocket_2x22_P2.00mm_Vertical.wrl"
+		(model "${KICAD8_3DMODEL_DIR}/Connector_PinSocket_2.00mm.3dshapes/PinSocket_2x22_P2.00mm_Horizontal.step"
 			(offset
 				(xyz 0 0 0)
 			)
@@ -5796,7 +5796,7 @@
 			(pintype "passive")
 			(uuid "7381d879-add4-46ce-806a-c6c656f27211")
 		)
-		(model "${KICAD8_3DMODEL_DIR}/Connector_PinHeader_2.54mm.3dshapes/PinHeader_2x32_P2.54mm_Vertical.wrl"
+		(model "${KICAD8_3DMODEL_DIR}/Connector_PinHeader_2.54mm.3dshapes/PinHeader_2x32_P2.54mm_Horizontal.step"
 			(offset
 				(xyz 0 0 0)
 			)

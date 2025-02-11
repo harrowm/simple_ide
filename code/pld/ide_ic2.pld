@@ -19,16 +19,23 @@ Device    g22V10;
 CLK   |1     24| VCC
 AS    |2     23| IDECS1
 IDECS |3     22| IDECS0
-A4    |4     21| READY
-UDS   |5     20| IDESEL
+A4    |4     21| X
+UDS   |5     20| X IDESEL
 A2    |6     19| IDEWR
 A1    |7     18| IDERD
 X     |8     17| IDEBUF
 RW    |9     16| DTACK
-RESET |10    15| WAIT2
-A3    |11    14| WAIT1
+RESET |10    15| DTACK_ENABLE
+A3    |11    14| WAIT
 GND   |12    13| X
        --------
+*/
+
+/*
+write CS1
+write cs0
+blip cs1
+read cs1
 */
 
 /**  Inputs  **/
@@ -47,8 +54,7 @@ PIN 16             = DTACK;
 PIN 17             = IDEBUF;
 PIN 18             = IDERD;
 PIN 19             = IDEWR;
-PIN 20             = IDESEL;  /* needed for tri-state */ 
-PIN 21             = READY;
+/*PIN 20             = IDESEL; */ /* needed for tri-state */ 
 PIN 22             = IDECS0;
 PIN 23             = IDECS1; 
 
@@ -56,8 +62,9 @@ PIN 23             = IDECS1;
 WAIT.sp = 'b'0; 
 DTACK_ENABLE.sp = 'b'0; 
 
-!IDECS0 = !IDECS & !A4;	
-!IDECS1 = !IDECS & A4;	
+/* Need to gate off blips using AS ?  - might mess up timing below in sequence ??  but noew removed UDS .. lets see */
+!IDECS0 = !IDECS & AS & !A4;	
+!IDECS1 = !IDECS & AS & A4;	
 
 DTACK.sp = 'b'0;  /* No need to use IDERDY as always 0 */
 IDESEL = !IDECS0 # !IDECS1;
@@ -72,9 +79,9 @@ FIELD STATE = [WAIT, DTACK, DTACK_ENABLE];
 
 SEQUENCE STATE {
     PRESENT 'b'000
-        IF IDESEL & UDS & RW
+        IF IDESEL & RW /* remove & UDS */
             NEXT 'b'100;
-        IF IDESEL & UDS & !RW
+        IF IDESEL & !RW /* remove & UDS */
             NEXT 'b'001;
         DEFAULT NEXT 'b'000;
     /* READ Sequence */
@@ -93,8 +100,8 @@ SEQUENCE STATE {
         IF !UDS
             NEXT 'b'011;
         DEFAULT NEXT 'b'001;
-    PRESENT 'b'0011
-        NEXT 'b'0010;
-    PRESENT 'b'0010
-        NEXT 'b'0000;
+    PRESENT 'b'011
+        NEXT 'b'010;
+    PRESENT 'b'010
+        NEXT 'b'000;
 }
