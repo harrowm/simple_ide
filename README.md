@@ -21,7 +21,7 @@ To build the rosco firmware with ATA enabled:
     # copy the ROM images to a SD Card named ROSCO32 on a Mac
     cp rosco_m68k.rom /Volumes/ROSCO32 
 
-.. mmm, had to edit the Makefiule to disable the creation of the rom filesystem as adding in the drivers means the default filesystem doesnt fit into the roms :sob:
+.. mmm, had to edit the Makefiule to disable the creation of the rom filesystem as adding in the drivers means the default filesystem doesnt fit into the roms :sob:  
 .. double mmm, the generated rom file had an odd size that the in system rom programming utility rejects as invalid.  Patch the file to an even size with the command:  
     
     truncate -s%2 rosco_m68k.rom
