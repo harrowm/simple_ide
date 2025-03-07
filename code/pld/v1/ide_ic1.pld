@@ -1,0 +1,51 @@
+Name      ide_ic1;
+Partno    ;
+Date      14/01/25;
+Revision  01;
+Designer  Malcolm Harrow;
+Company   Malcolm Harrow, MIT License;
+Assembly  None;
+Location  None;
+Device    g22V10;
+
+/****************************************************************/
+/*                                                              */
+/* PLD code for the simple ide interface, sets CS and R/W lines */
+/*                                                              */
+/****************************************************************/
+
+/* Pin Map
+       --------
+IOSEL |1     24| VCC
+FC2   |2     23| IDECS
+FC1   |3     22| A5
+FC0   |4     21| A6
+X     |5     20| A7
+A15   |6     19| A8
+A16   |7     18| A9
+A17   |8     17| A10
+A18   |9     16| A11
+A19   |10    15| A12
+AS    |11    14| A13
+GND   |12    13| A14
+       --------
+*/
+
+/**  Inputs  **/
+PIN 1              = IOSEL;
+PIN [2..4]         = [FC2..0];              
+PIN [10..6,13..22] = [A19..5];  
+PIN 11             = AS;
+
+/**  Outputs  **/
+PIN 23             = IDECS;
+
+/** Logic Equations **/
+/* IOSEL low gives us an address in the range F00000 to FFFFFF  */
+/* IDE card mapped to F80040 upwards                            */
+/* IDECS is further processed in IC2 to determine whether       */
+/* CS0 or CS1 is set - not enough free pins here !              */
+
+FIELD addr = [A19..5];
+/* Remove & !AS */
+!IDECS = !IOSEL & !(FC2 & FC1 & FC0) & addr:['h'80040..8005F];
