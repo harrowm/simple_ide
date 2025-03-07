@@ -39,6 +39,7 @@ void IDE_wait_for_device_ready()
     {
         printf(".");
     }
+    printf("\n");
 }
 
 // void IDE_wait_for_device_ready()
@@ -57,13 +58,16 @@ void IDE_wait_for_device_ready()
 void IDE_wait_for_data_ready()
 {
     printf("IDE_wait_for_data_ready: \n");
-    print_status_byte(MEM(IDE_STATUS));
+//    print_status_byte(MEM(IDE_STATUS));
     while ((MEM(IDE_STATUS) & IDE_SR_DRQ) == 0)
     {
-        print_status_byte(MEM(IDE_STATUS));
+        printf(".");
+        //print_status_byte(MEM(IDE_STATUS));
     }
-    print_status_byte(MEM(IDE_STATUS));
-    print_status_byte(MEM(IDE_STATUS));
+    printf("\n");
+
+//  print_status_byte(MEM(IDE_STATUS));
+//  print_status_byte(MEM(IDE_STATUS));
 
 }
 

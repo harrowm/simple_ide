@@ -15,80 +15,81 @@ Device    g22V10;
 /****************************************************************/
 
 /* Pin Map
-       --------
-CLK   |1     24| VCC
-AS    |2     23| IDECS1
-IDECS |3     22| IDECS0
-A4    |4     21| X
-UDS   |5     20| X IDESEL
-A2    |6     19| IDEWR
-A1    |7     18| IDERD
-X     |8     17| IDEBUF
-RW    |9     16| DTACK
-RESET |10    15| DTACK_ENABLE
-A3    |11    14| WAIT
-GND   |12    13| X
-       --------
-*/
-
-/*
-write CS1
-write cs0
-blip cs1
-read cs1
+        --------
+CPUCLK |1     24| VCC
+AS     |2     23| IDECS1
+SELECT |3     22| IDECS0
+A4     |4     21| IDEWR
+A3     |5     20| IDERD
+A2     |6     19| IDEBUF
+A1     |7     18| DTACK
+LDS    |8     17| DTACK_ENABLE
+UDS    |9     16| WAIT
+RW     |10    15| VPA_ENABLE
+RESET  |11    14| VPA
+GND    |12    13| CPUSP
+        --------
 */
 
 /**  Inputs  **/
-PIN 1              = CLK;
-PIN 2              = AS;           
-PIN 3              = IDECS;
-PIN 5              = UDS;
-PIN 9              = RW;
-PIN 10             = RESET;
-PIN [4,11,6,7]     = [A4..1];
+PIN 1           = CPUCLK;
+PIN 2           = AS;           
+PIN 3           = SELECT;
+PIN [4..7]      = [A4..1];
+PIN 8           = LDS;
+PIN 9           = UDS;
+PIN 10          = RW;
+PIN 11          = RESET;
+PIN 13          = CPUSP;
 
 /**  Outputs  **/
-PIN 14             = WAIT;
-PIN 15             = DTACK_ENABLE;
-PIN 16             = DTACK;
-PIN 17             = IDEBUF;
-PIN 18             = IDERD;
-PIN 19             = IDEWR;
-/*PIN 20             = IDESEL; */ /* needed for tri-state */ 
-PIN 22             = IDECS0;
-PIN 23             = IDECS1; 
+PIN 14          = VPA;
+PIN 15          = VPA_ENABLE;
+PIN 16          = WAIT;
+PIN 17          = DTACK_ENABLE;
+PIN 18          = DTACK;
+PIN 19          = IDEBUF;
+PIN 20          = IDERD;
+PIN 21          = IDEWR;
+PIN 22          = IDECS0;
+PIN 23          = IDECS1; 
 
 /** Logic Equations **/
-WAIT.sp = 'b'0; 
+WAIT.sp         = 'b'0; 
+WAITTWO.sp      = 'b'0; 
 DTACK_ENABLE.sp = 'b'0; 
 
-/* Need to gate off blips using AS ?  - might mess up timing below in sequence ??  but noew removed UDS .. lets see */
-!IDECS0 = !IDECS & AS & !A4;	
-!IDECS1 = !IDECS & AS & A4;	
+!IDECS0         = SELECT & !A4;	
+!IDECS1         = SELECT & A4;	
 
-DTACK.sp = 'b'0;  /* No need to use IDERDY as always 0 */
-IDESEL = !IDECS0 # !IDECS1;
-DTACK.oe = DTACK_ENABLE; 
+DTACK.sp        = 'b'0;  /* No need to use IDERDY as always 0 */
+DTACK.oe        = DTACK_ENABLE; 
 
-!IDEBUF = !IDECS0 # !IDECS1;
+IDEBUF          = !SELECT;
 
-!IDERD =  RW & IDESEL & !UDS & WAIT;
-!IDEWR = !RW & IDESEL & !UDS;
+ds              = !UDS # !LDS; /* Not sure I need LDS .. */
+
+!IDERD          =  RW & SELECT & ds & WAIT;
+!IDEWR          = !RW & SELECT & ds;
+
+VPA             = 'b'1;
+VPA.oe          = VPA_ENABLE;
+VPA_ENABLE      = CPUSP & !A3 & A2 & A1;
 
 FIELD STATE = [WAIT, DTACK, DTACK_ENABLE];
 
 SEQUENCE STATE {
     PRESENT 'b'000
-        IF IDESEL & RW /* remove & UDS */
+        IF SELECT & ds & RW 
             NEXT 'b'100;
-        IF IDESEL & !RW /* remove & UDS */
+        IF SELECT & ds & !RW
             NEXT 'b'001;
         DEFAULT NEXT 'b'000;
     /* READ Sequence */
     PRESENT 'b'100
         NEXT 'b'101;
     PRESENT 'b'101
-        IF !UDS
+        IF !ds
             NEXT 'b'111;
         DEFAULT NEXT 'b'101;
     PRESENT 'b'111
@@ -97,7 +98,7 @@ SEQUENCE STATE {
         NEXT 'b'000;
     /* WRITE Sequence */
     PRESENT 'b'001
-        IF !UDS
+        IF !ds
             NEXT 'b'011;
         DEFAULT NEXT 'b'001;
     PRESENT 'b'011
