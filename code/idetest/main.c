@@ -42,19 +42,13 @@ int main()
 {
     uint16_t buf[256] = {0};
 
-    // printf("IDE Demo %08X\n", IDE_COMMAND);
+    printf("IDE Demo, interface mapped at %08X\n", IDE_BASE);
 
-    printf("Reset IDE device\n");
-    // for (;;) {
-        // printf("1\n");
-        MEM(IDE_COMMAND) = IDE_CMD_RESET;
-        // printf("2\n");
-        // IDE_wait_for_device_ready();
-        // printf("3\n");
-    // }
-    // printf("Reset2 IDE device\n");
-    IDE_wait_for_device_ready();
+    if (IDE_reset()) {
+        return(1);
+    }
 
+    
     printf("Get drive info\n");
     IDE_device_info(buf);
     hexdump((uint8_t *)buf, 512);
@@ -68,6 +62,5 @@ int main()
     hexdump((uint8_t *)buf, 512);
 
     printf("Done\n");
-
     return 0;
 }

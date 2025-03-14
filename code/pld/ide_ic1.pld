@@ -42,10 +42,12 @@ PIN 23             = SELECT;
 
 /** Logic Equations **/
 /* IOSEL low gives us an address in the range F00000 to FFFFFF  */
-/* IDE card mapped to F80040 upwards                            */
+/* The original IDE card from  Mark Murray was mapped to F80040 */
+/* - but this now clashes with r2 UART, so move to F20040.      */
 
-FIELD addr = [A19..5];
+/* FIELD addr = [A19..5]; */
 cpuspace = FC2 & FC1 & FC0;
 
-SELECT = !IOSEL & !cpuspace & addr:['h'80040..8005F];
+SELECT = !IOSEL & !cpuspace & !A19 & !A18 & A17 & !A16 & !A15 & !A14 & !A13 & !A12 & !A11 & !A10 & !A9 & !A8 & !A7 & A6;
+
 CPUSP  = cpuspace;
