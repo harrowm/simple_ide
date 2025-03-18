@@ -44,7 +44,7 @@ int main()
 
     printf("IDE Demo, interface mapped at %08X\n", IDE_BASE);
 
-    if (IDE_reset()) {
+    if (!IDE_reset()) {
         return(1);
     }
 

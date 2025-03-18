@@ -19,7 +19,7 @@ Device    g22V10;
 IOSEL |1     24| VCC
 FC2   |2     23| SELECT
 FC1   |3     22| CPUSP
-FC0   |4     21| x
+FC0   |4     21| AS
 A13   |5     20| A5
 A14   |6     19| A6
 A15   |7     18| A7
@@ -35,6 +35,7 @@ GND   |12    13| A12
 PIN 1              = IOSEL;
 PIN [2..4]         = [FC2..0];              
 PIN [11..5,13..20] = [A19..5];  
+PIN 21             = AS;
 
 /**  Outputs  **/
 PIN 22             = CPUSP;
@@ -46,8 +47,7 @@ PIN 23             = SELECT;
 /* - but this now clashes with r2 UART, so move to F20040.      */
 
 /* FIELD addr = [A19..5]; */
-cpuspace = FC2 & FC1 & FC0;
+CPUSP = FC2 & FC1 & FC0;
 
-SELECT = !IOSEL & !cpuspace & !A19 & !A18 & A17 & !A16 & !A15 & !A14 & !A13 & !A12 & !A11 & !A10 & !A9 & !A8 & !A7 & A6;
-
-CPUSP  = cpuspace;
+/* We dont need to include cpuspace in below equation as IOSEL contains already */
+SELECT = !IOSEL & !A19 & !A18 & A17 & !A16 & !A15 & !A14 & !A13 & !A12 & !A11 & !A10 & !A9 & !A8 & !A7 & A6;

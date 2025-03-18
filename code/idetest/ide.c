@@ -1,6 +1,8 @@
 #include "ide.h"
 #include <stdio.h>
 
+#define ATA_DEBUG
+
 static void read_sector(uint16_t *buf)
 {
     for (uint16_t i = 0; i < 256; i++)
@@ -87,13 +89,18 @@ static int IDE_wait_for_data_ready()
     uint32_t timeout = 0;
 
 #ifdef ATA_DEBUG
-    printf("IDE_wait_for_device_ready: \n");
+    printf("IDE_wait_for_data_ready: \n");
+    uint8_t old_status = 0;
 #endif
 
     while (((status = MEM(IDE_STATUS)) & IDE_SR_DRQ) == 0 && timeout++ < ATA_TIMEOUT)
     {
 #ifdef ATA_DEBUG
-        IDE_print_status_byte(status);
+        if (status != old_status)
+        {
+            IDE_print_status_byte(status);
+            old_status = status;
+        }
 #endif
     }
 

@@ -56,7 +56,6 @@ PIN 23          = IDECS1;
 
 /** Logic Equations **/
 WAIT.sp         = 'b'0; 
-WAITTWO.sp      = 'b'0; 
 DTACK_ENABLE.sp = 'b'0; 
 
 !IDECS0         = SELECT & !A4;	
@@ -64,6 +63,9 @@ DTACK_ENABLE.sp = 'b'0;
 
 DTACK.sp        = 'b'0;  /* No need to use IDERDY as always 0 */
 DTACK.oe        = DTACK_ENABLE; 
+
+/* DTACK = 'b'0; */
+/* DTACK_ENABLE = SELECT; */
 
 IDEBUF          = !SELECT;
 
@@ -76,8 +78,10 @@ VPA             = 'b'1;
 VPA.oe          = VPA_ENABLE;
 VPA_ENABLE      = CPUSP & !A3 & A2 & A1;
 
-FIELD STATE = [WAIT, DTACK, DTACK_ENABLE];
+/* WAIT.D = SELECT & ds & !RW; */
+/* DTACK_ENABLE = WAIT;*/
 
+FIELD STATE = [WAIT, DTACK, DTACK_ENABLE];
 SEQUENCE STATE {
     PRESENT 'b'000
         IF SELECT & ds & RW 
